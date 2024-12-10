@@ -3,7 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import EmployeeView from '@/views/EmployeeView.vue'
 import PayrollView from '@/views/PayrollView.vue'
 import TimeoffView from '@/views/TimeoffView.vue'
-import DashboardView from '@/views/DashboardView.vue'
+import LoginView from '@/views/LoginView.vue'
 
 const routes = [
   {
@@ -27,10 +27,11 @@ const routes = [
     name: 'timeoff',
     component: TimeoffView
   },
+ 
   {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: DashboardView
+    path: '/login',
+    name: 'login',
+    component: LoginView
   },
 ]
 

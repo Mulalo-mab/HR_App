@@ -73,8 +73,10 @@
       return {
         employees: [
           { id: 1, name: "Mulalo Mabuda", role: "Software Engineer", salary: 50000 },
-          { id: 2, name: "Jane Smith", role: "QA Tester", salary: 45000 },
-          { id: 3, name: "Alice Johnson", role: "HR Manager", salary: 60000 },
+          { id: 2, name: "Lithemba Mlenze", role: "QA Tester", salary: 45000 },
+          { id: 3, name: "Anele Mbombiya", role: "HR Manager", salary: 60000 },
+          { id: 4, name: "Bukho Sean", role: "Front-end Developer", salary: 30000},
+          { id: 5, name: "Sinoyolo Ngavu", role: "UI/UX Design", salary: 30000}
         ],
         newEmployee: { name: "", role: "", salary: "" },
         editing: false,
