@@ -21,6 +21,7 @@
       <p>Hours Worked: {{ selectedEmployeeData?.hoursWorked }}</p>
       <p>Leave Deductions: {{ selectedEmployeeData?.leaveDeductions }}</p>
       <p>Final Salary: R{{ payResult }}</p>
+      <button class="btn btn-secondary" @click="closeResult">Close</button>
     </div>
   </section>
 </template>
@@ -109,6 +110,10 @@ export default {
         this.selectedEmployeeData = employeeData;
         this.payResult = employeeData.finalSalary;
       }
+    },
+    closeResult() {
+      this.payResult = null;
+      this.selectedEmployeeData = null;
     },
   },
 };
