@@ -201,15 +201,63 @@ export default {
 body {
   font-family: Arial, sans-serif;
 }
+
 .container {
   margin-top: 20px;
 }
+
 .modal-content {
   padding: 20px;
   border-radius: 5px;
 }
+
 .modal-footer {
   display: flex;
   justify-content: flex-end;
+}
+
+/* Media Queries */
+@media (max-width: 576px) {
+  .table {
+    font-size: 0.8rem;
+  }
+
+  .modal-content {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .table {
+    font-size: 0.9rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .table {
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 993px) {
+  .table {
+    font-size: 1.1rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
 }
 </style>

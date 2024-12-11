@@ -1,23 +1,31 @@
 <template>
   <section class="payroll-calculator container mt-5">
     <h2 class="text-center mb-4">Payroll Calculator</h2>
-    <form @submit.prevent="calculatePay" class="p-4 border rounded shadow">
-      <!-- Employee Selection -->
-      <div class="mb-3">
-        <label for="employee" class="form-label">Employee:</label>
-        <select id="employee" v-model="selectedEmployee" class="form-select">
-          <option value="" disabled>Select Employee</option>
-          <option v-for="employee in payrollData" :key="employee.employeeId" :value="employee.employeeId">
-            Employee {{ employee.employeeId }}
-          </option>
-        </select>
+
+    <!-- Button to trigger modal -->
+    <button class="btn btn-primary" @click="showModal = true">Select Employee & Calculate Pay</button>
+
+    <!-- Modal -->
+    <div v-if="showModal" class="modal-overlay">
+      <div class="modal-content">
+        <h4 class="mb-3">Select Employee</h4>
+        <ul class="list-group mb-3">
+          <li 
+            v-for="employee in payrollData" 
+            :key="employee.employeeId" 
+            class="list-group-item d-flex justify-content-between align-items-center">
+            <span>Employee {{ employee.employeeId }} (Hours: {{ employee.hoursWorked }}, Leave: {{ employee.leaveDeductions }})</span>
+            <button class="btn btn-success btn-sm" @click="selectEmployee(employee)">Select</button>
+          </li>
+        </ul>
+        <button class="btn btn-secondary" @click="closeModal">Close</button>
       </div>
-      <!-- Submit Button -->
-      <button type="submit" class="btn btn-primary w-100">Calculate Pay</button>
-    </form>
+    </div>
+
     <!-- Result Section -->
     <div v-if="payResult !== null" class="result mt-4 p-3 border rounded shadow">
       <h5 class="text-success">Calculated Pay:</h5>
+      <p>Employee ID: {{ selectedEmployeeData?.employeeId }}</p>
       <p>Hours Worked: {{ selectedEmployeeData?.hoursWorked }}</p>
       <p>Leave Deductions: {{ selectedEmployeeData?.leaveDeductions }}</p>
       <p>Final Salary: R{{ payResult }}</p>
@@ -30,7 +38,7 @@
 export default {
   data() {
     return {
-      payrollData: [
+      payrollData:  [
         {
           employeeId: 1,
           hoursWorked: 160,
@@ -92,24 +100,19 @@ export default {
           finalSalary: 57750,
         },
       ],
-      selectedEmployee: "",
-      payResult: null,
+      showModal: false,
       selectedEmployeeData: null,
+      payResult: null,
     };
   },
   methods: {
-    calculatePay() {
-      if (!this.selectedEmployee) {
-        alert("Please select an employee.");
-        return;
-      }
-      const employeeData = this.payrollData.find(
-        (data) => data.employeeId === this.selectedEmployee
-      );
-      if (employeeData) {
-        this.selectedEmployeeData = employeeData;
-        this.payResult = employeeData.finalSalary;
-      }
+    selectEmployee(employee) {
+      this.selectedEmployeeData = employee;
+      this.payResult = employee.finalSalary;
+      this.closeModal();
+    },
+    closeModal() {
+      this.showModal = false;
     },
     closeResult() {
       this.payResult = null;
@@ -125,8 +128,30 @@ export default {
   margin: 0 auto;
 }
 
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px;
+}
+
 .result {
-  background-color: #f8f9fa; /* Light gray background */
+  background-color: #f8f9fa;
   font-size: 1.2rem;
 }
 </style>
