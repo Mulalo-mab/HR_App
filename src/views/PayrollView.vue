@@ -142,7 +142,7 @@ export default {
   align-items: center;
   height: 100vh;
   text-align: center;
-  background-image: url('@/assets/purplelight.jpg');
+  background-image: url('@/assets/stars.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

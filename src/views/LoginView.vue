@@ -91,12 +91,12 @@ export default {
       }
     },
     loginUser() {
-      if (!this.username || !this.password) {
-        alert("Please fill in all required fields.");
-        return;
+      if (this.username === "User1" && this.password === "12345678") {
+        console.log("Login successful!");
+        this.$router.push("/"); // Replace with your home route
+      } else {
+        alert("Invalid username or password. Please try again.");
       }
-      console.log("Logging in with:", this.username, this.password);
-      this.$router.push("/"); // Replace with your home route
     },
     registerUser() {
       if (!this.email || this.password !== this.confirmPassword) {
@@ -128,7 +128,7 @@ export default {
   height: 100vh;
   text-align: center;
   color: white;
-  background-image: url('@/assets/connecting.png'); 
+  background-image: url('@/assets/GR.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

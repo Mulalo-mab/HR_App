@@ -234,13 +234,13 @@ export default {
 
 <style scoped>
 /* General styles */
-.time {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background-color: rgb(156, 233, 228);
-  background-position: center;
-}
+.time{
+    background-image: url('@/assets/Blue.png'); ;
+    background-size:cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 10x;
+  }
 .leave-requests-list {
   list-style-type: none; /* Remove list item points */
   padding-left: 0; /* Remove the default left padding */
@@ -278,7 +278,7 @@ button {
   }
   .employee {
     margin-bottom: 20px; /* Adjust spacing */
-    border: 1px solid #ddd; /* Add border around employee sections */
+    border: 1px solid #000000; /* Add border around employee sections */
     padding: 10px; /* Add padding */
     border-radius: 5px; /* Rounded corners */
   }
