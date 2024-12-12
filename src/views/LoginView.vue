@@ -104,6 +104,7 @@ export default {
         return;
       }
       console.log("Registering with:", this.username, this.email, this.password);
+      this.$router.push("/");
     },
     toggleForm() {
       this.isLogin = !this.isLogin;

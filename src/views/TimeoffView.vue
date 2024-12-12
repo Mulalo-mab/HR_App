@@ -21,7 +21,7 @@
         <!-- Leave requests section (only shown if there are leave requests) -->
         <div v-if="employee.leaveRequests.length">
           <h3>Leave Requests</h3>
-          <ul>
+          <ul class="leave-requests-list">
             <!-- List of leave requests for the employee -->
             <li v-for="request in employee.leaveRequests" :key="request.date">
               <!-- Leave request details -->
@@ -240,6 +240,10 @@ export default {
   text-align: center;
   background-color: rgb(156, 233, 228);
   background-position: center;
+}
+.leave-requests-list {
+  list-style-type: none; /* Remove list item points */
+  padding-left: 0; /* Remove the default left padding */
 }
 
 .text-success {
