@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <!-- Title -->
     <h1 class="text-center">Employee Data Management</h1>
 
     <!-- Search Bar -->
@@ -12,6 +13,13 @@
       />
     </div>
 
+    <!-- Add Employee Button -->
+    <div class="mt-4 text-end">
+      <button class="btn btn-primary" @click="openAddEmployeeModal">
+        Add Employee
+      </button>
+    </div>
+
     <!-- Employee Table -->
     <table class="table table-striped mt-4" border="1" cellspacing="0" cellpadding="8">
       <thead>
@@ -20,7 +28,6 @@
           <th>Name</th>
           <th>Position</th>
           <th>Department</th>
-          <th>Salary</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -30,7 +37,6 @@
           <td>{{ employee.name }}</td>
           <td>{{ employee.position }}</td>
           <td>{{ employee.department }}</td>
-          <td>{{ employee.salary }}</td>
           <td>
             <button class="btn btn-info btn-sm" @click="showEmployeeDetails(index)">
               Show More
@@ -60,12 +66,59 @@
             <p><strong>Name:</strong> {{ selectedEmployee.name }}</p>
             <p><strong>Position:</strong> {{ selectedEmployee.position }}</p>
             <p><strong>Department:</strong> {{ selectedEmployee.department }}</p>
-            <p><strong>Salary:</strong> {{ selectedEmployee.salary }}</p>
+            <p><strong>Salary:</strong> R{{ selectedEmployee.salary }}</p>
             <p><strong>Employment History:</strong> {{ selectedEmployee.employmentHistory }}</p>
             <p><strong>Contact:</strong> {{ selectedEmployee.contact }}</p>
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" @click="closeModal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Employee Modal -->
+    <div
+      v-if="showAddEmployeeModal"
+      class="modal fade show"
+      style="display: block; background: rgba(0, 0, 0, 0.5);"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Employee</h5>
+            <button type="button" class="btn-close" @click="closeAddEmployeeModal"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Form Inputs -->
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" class="form-control" v-model="newEmployee.name" />
+            </div>
+            <div class="mb-3">
+              <label for="position" class="form-label">Position</label>
+              <input type="text" class="form-control" v-model="newEmployee.position" />
+            </div>
+            <div class="mb-3">
+              <label for="department" class="form-label">Department</label>
+              <input type="text" class="form-control" v-model="newEmployee.department" />
+            </div>
+            <div class="mb-3">
+              <label for="salary" class="form-label">Salary</label>
+              <input type="number" class="form-control" v-model="newEmployee.salary" />
+            </div>
+            <div class="mb-3">
+              <label for="employmentHistory" class="form-label">Employment History</label>
+              <textarea class="form-control" v-model="newEmployee.employmentHistory"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="contact" class="form-label">Contact</label>
+              <input type="email" class="form-control" v-model="newEmployee.contact" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" @click="closeAddEmployeeModal">Cancel</button>
+            <button class="btn btn-primary" @click="addEmployee">Add Employee</button>
           </div>
         </div>
       </div>
@@ -171,10 +224,20 @@ export default {
       ],
       searchQuery: "",
       showModal: false,
+      showAddEmployeeModal: false,
       selectedEmployee: null,
+      newEmployee: {
+        name: "",
+        position: "",
+        department: "",
+        salary: null,
+        employmentHistory: "",
+        contact: "",
+      },
     };
   },
   computed: {
+    // Filters employees based on the search query
     filteredEmployees() {
       return this.employees.filter((employee) =>
         employee.name.toLowerCase().includes(this.searchQuery.toLowerCase())
@@ -182,16 +245,49 @@ export default {
     },
   },
   methods: {
+    // Deletes an employee by index
     deleteEmployee(index) {
       this.employees.splice(index, 1);
     },
+    // Shows detailed information about an employee
     showEmployeeDetails(index) {
       this.selectedEmployee = { ...this.filteredEmployees[index] };
       this.showModal = true;
     },
+    // Closes the details modal
     closeModal() {
       this.showModal = false;
       this.selectedEmployee = null;
+    },
+    // Opens the add employee modal
+    openAddEmployeeModal() {
+      this.showAddEmployeeModal = true;
+    },
+    // Closes the add employee modal and resets the form
+    closeAddEmployeeModal() {
+      this.showAddEmployeeModal = false;
+      this.resetNewEmployeeForm();
+    },
+    // Adds a new employee to the list
+    addEmployee() {
+      const newEmployeeId = this.employees.length + 1;
+      const employeeToAdd = {
+        employeeId: newEmployeeId,
+        ...this.newEmployee,
+      };
+      this.employees.push(employeeToAdd);
+      this.closeAddEmployeeModal();
+    },
+    // Resets the form for adding a new employee
+    resetNewEmployeeForm() {
+      this.newEmployee = {
+        name: "",
+        position: "",
+        department: "",
+        salary: null,
+        employmentHistory: "",
+        contact: "",
+      };
     },
   },
 };

@@ -19,7 +19,7 @@ export default {};
   height: 100vh;
   text-align: center;
   color: white;
-  background-image: url('@/assets/Backgrnd.jpg'); /* Replace with your actual image path */
+  background-image: url('@/assets/Backgrnd.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -55,8 +55,8 @@ p {
   }
 
   .content-container {
-    padding: 40px; /* Increase padding for larger screens */
-    max-width: 60%; /* Restrict width for better readability */
+    padding: 40px; 
+    max-width: 60%; 
   }
 }
 

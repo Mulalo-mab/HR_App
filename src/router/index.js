@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import LoginView from '@/views/LoginView.vue'
 import HomeView from '../views/HomeView.vue'
 import EmployeeView from '@/views/EmployeeView.vue'
 import PayrollView from '@/views/PayrollView.vue'
 import TimeoffView from '@/views/TimeoffView.vue'
-import LoginView from '@/views/LoginView.vue'
+
 
 const routes = [
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView
+  },
   {
     path: '/',
     name: 'home',
@@ -28,11 +34,6 @@ const routes = [
     component: TimeoffView
   },
  
-  {
-    path: '/login',
-    name: 'login',
-    component: LoginView
-  },
 ]
 
 const router = createRouter({

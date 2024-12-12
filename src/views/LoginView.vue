@@ -1,4 +1,5 @@
 <template>
+  <div class="log-in">
   <div class="auth-container">
     <h1>{{ isLogin ? 'Login' : 'Sign Up' }}</h1>
 
@@ -67,6 +68,7 @@
       </span>
     </p>
   </div>
+</div>
 </template>
 
 <script>
@@ -118,6 +120,19 @@ export default {
 </script>
 
 <style scoped>
+.log-in {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  color: white;
+  background-image: url('@/assets/connecting.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 10px;
+}
 .auth-container {
   max-width: 400px;
   margin: 100px auto;
