@@ -142,7 +142,7 @@ export default {
   align-items: center;
   height: 100vh;
   text-align: center;
-  background-image: url('@/assets/stars.png');
+  background-image: url('@/assets/buildings.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -158,7 +158,7 @@ export default {
 /* Modal overlay styling */
 .modal-overlay {
   position: fixed;
-  top: 0;
+  top: 60px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -177,6 +177,7 @@ export default {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   width: 90%;
   max-width: 500px;
+  margin-top: 20px;
 }
 
 /* Result section styling */
@@ -195,7 +196,8 @@ export default {
     margin: 0;
   }
   .modal-content {
-    width: 95%;
+    width: 90%;
+    padding: 15px;
   }
   .result {
     font-size: 1rem;
@@ -212,9 +214,26 @@ export default {
   }
   .modal-content {
     font-size: 0.9rem;
+    width: 95%;
+    padding: 10px;
   }
   .result {
     font-size: 0.9rem;
+  }
+}
+
+/* Modal-specific responsiveness */
+@media (max-width: 360px) {
+  .modal-content {
+    font-size: 0.8rem;
+    width: 100%;
+    padding: 5px;
+  }
+  .modal-content h4 {
+    font-size: 1rem;
+  }
+  .list-group-item {
+    font-size: 0.8rem;
   }
 }
 </style>
