@@ -12,6 +12,7 @@ export default {};
 </script>
 
 <style scoped>
+/* Base styles */
 .home {
   display: flex;
   justify-content: center;
@@ -19,21 +20,44 @@ export default {};
   height: 100vh;
   text-align: center;
   color: white;
-  background-image: url('@/assets/Backgrnd.jpg'); 
+  background-image: url('@/assets/Backgrnd.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 10px; /* Ensures content doesn’t touch the edges on small screens */
+  padding: 10px;
 }
 
+/* Content container with heartbeat animation and color change */
 .content-container {
-  background-color: rgba(0, 0, 0, 0.5); /* Add slight transparency for text visibility */
-  padding: 5%; /* Adjust padding relatively for better scaling */
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5%;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-  max-width: 90%; /* Prevents content from becoming too wide on large screens */
+  max-width: 90%;
+  animation: heartbeat 1.5s ease-in-out infinite; /* Heartbeat animation */
 }
 
+/* Keyframes for heartbeat animation with color change */
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+    background-color: rgba(0, 0, 0, 0.5); /* Default color */
+  }
+  30% {
+    transform: scale(1.1);
+    background-color: rgba(0, 128, 128, 0.7); /* Teal color */
+  }
+  60% {
+    transform: scale(1);
+    background-color: rgba(128, 0, 128, 0.7); /* Purple color */
+  }
+  100% {
+    transform: scale(1);
+    background-color: rgba(0, 0, 0, 0.5); /* Back to default color */
+  }
+}
+
+/* Heading and paragraph styles */
 h1 {
   font-size: 2rem;
   margin-bottom: 10px;
@@ -55,8 +79,8 @@ p {
   }
 
   .content-container {
-    padding: 40px; 
-    max-width: 60%; 
+    padding: 40px;
+    max-width: 60%;
   }
 }
 

@@ -1,55 +1,65 @@
 <template>
   <div class="time">
-  <!-- Main container for the application -->
-  <div class="container">
-    <!-- Header for the application -->
-    <h1>Employee Attendance & Time Off Requests</h1>
+    <!-- Main container for the application -->
+    <div class="container">
+      <!-- Header for the application -->
+      <h1>Employee Attendance & Time Off Requests</h1>
 
-    <!-- List of employees -->
-    <div class="employee-list">
-      <div v-for="employee in employees" :key="employee.employeeId" class="employee">
-        <!-- Employee name -->
-        <h2>{{ employee.name }}</h2>
+      <!-- Employee List -->
+      <div class="employee-list">
+        <div v-for="employee in employees" :key="employee.employeeId" class="employee">
+          <h2>{{ employee.name }}</h2>
 
-        <!-- Attendance records for the employee -->
-        <div v-for="day in employee.attendance" :key="day.date">
-          <span>{{ day.date }}: </span>
-          <!-- Status of attendance with dynamic class based on status -->
-          <span :class="getStatusClass(day.status)">{{ day.status }}</span>
-        </div>
+          <!-- Employee Attendance Records -->
+          <div v-for="day in employee.attendance" :key="day.date">
+            <span>{{ day.date }}: </span>
+            <span :class="getStatusClass(day.status)">{{ day.status }}</span>
+          </div>
 
-        <!-- Leave requests section (only shown if there are leave requests) -->
-        <div v-if="employee.leaveRequests.length">
-          <h3>Leave Requests</h3>
-          <ul class="leave-requests-list">
-            <!-- List of leave requests for the employee -->
-            <li v-for="request in employee.leaveRequests" :key="request.date">
-              <!-- Leave request details -->
-              {{ request.date }} - {{ request.reason }} ({{ request.status }})
+          <!-- Leave Requests Section -->
+          <div v-if="employee.leaveRequests.length">
+            <h3>Leave Requests</h3>
+            <ul class="leave-requests-list">
+              <li v-for="request in employee.leaveRequests" :key="request.date">
+                {{ request.date }} - {{ request.reason }} ({{ request.status }})
+                <button v-if="request.status === 'Pending'" @click="approveLeave(employee, request)">Approve</button>
+                <button v-if="request.status === 'Pending'" @click="denyLeave(employee, request)">Deny</button>
+              </li>
+            </ul>
+          </div>
 
-              <!-- Approve button (shown only for pending requests) -->
-              <button v-if="request.status === 'Pending'" @click="approveLeave(employee, request)">Approve</button>
+          <!-- Request Time Off Form (Visible to employee) -->
+          <div v-if="employee.isEmployee">
+            <h3>Submit Time Off Request</h3>
+            <form @submit.prevent="submitLeaveRequest(employee)">
+              <label for="date">Date:</label>
+              <input type="date" v-model="newRequestDate" required />
 
-              <!-- Deny button (shown only for pending requests) -->
-              <button v-if="request.status === 'Pending'" @click="denyLeave(employee, request)">Deny</button>
-            </li>
-          </ul>
+              <label for="reason">Reason:</label>
+              <input type="text" v-model="newRequestReason" required />
+
+              <button type="submit">Submit Request</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      // Array of employees with their attendance and leave requests
+      // New leave request data
+      newRequestDate: "",
+      newRequestReason: "",
+      // Employees data
       employees: [
       {
           employeeId: 1,
           name: "Sibongile Nkosi",
+          isEmployee: true, // This flag can be used to show the time off request form to employees
           attendance: [
             { date: "2024-11-25", status: "Present" },
             { date: "2024-11-26", status: "Absent" },
@@ -65,6 +75,7 @@ export default {
         {
           employeeId: 2,
           name: "Lungile Moyo",
+          isEmployee: true, // This flag can be used to show the time off request form to employees
           attendance: [
             { date: "2024-11-25", status: "Present" },
             { date: "2024-11-26", status: "Present" },
@@ -80,6 +91,7 @@ export default {
         {
           employeeId: 3,
           name: "Thabo Molefe",
+          isEmployee: true, // This flag can be used to show the time off request form to employees
           attendance: [
             { date: "2024-11-25", status: "Present" },
             { date: "2024-11-26", status: "Present" },
@@ -95,6 +107,7 @@ export default {
         {
           employeeId: 4,
           name: "Keshav Naidoo",
+          isEmployee: true, // This flag can be used to show the time off request form to employees
           attendance: [
             { date: "2024-11-25", status: "Absent" },
             { date: "2024-11-26", status: "Present" },
@@ -109,6 +122,7 @@ export default {
         {
           employeeId: 5,
           name: "Zanele Khumalo",
+          isEmployee: true, // This flag can be used to show the time off request form to employees
           attendance: [
             { date: "2024-11-25", status: "Present" },
             { date: "2024-11-26", status: "Present" },
@@ -123,6 +137,7 @@ export default {
         {
           employeeId: 6,
           name: "Sipho Zulu",
+          isEmployee: true, // This flag can be used to show the time off request form to employees
           attendance: [
             { date: "2024-11-25", status: "Present" },
             { date: "2024-11-26", status: "Present" },
@@ -137,6 +152,7 @@ export default {
         {
           employeeId: 7,
           name: "Naledi Moeketsi",
+          isEmployee: true, // This flag can be used to show the time off request form to employees
           attendance: [
             { date: "2024-11-25", status: "Present" },
             { date: "2024-11-26", status: "Present" },
@@ -151,6 +167,7 @@ export default {
         {
           employeeId: 8,
           name: "Farai Gumbo",
+          isEmployee: true, // This flag can be used to show the time off request form to employees
           attendance: [
             { date: "2024-11-25", status: "Present" },
             { date: "2024-11-26", status: "Absent" },
@@ -165,6 +182,7 @@ export default {
         {
             employeeId: 9,
             name: "Karabo Dlamini",
+            isEmployee: true, // This flag can be used to show the time off request form to employees
             attendance: [
                 {date: "2024-11-25", status: "Present"},
                 {date: "2024-11-26", status: "Present"},
@@ -179,6 +197,7 @@ export default {
         {
             employeeId: 10,
             name: "Fatima Patel",
+            isEmployee: true, // This flag can be used to show the time off request form to employees
             attendance: [
                 {date: "2024-11-25", status: "Present"},
                 {date: "2024-11-26", status: "Present"},
@@ -195,37 +214,52 @@ export default {
     };
   },
   methods: {
-    // Method to approve a leave request
-    approveLeave(employee, request) {
-      // Find the attendance record for the leave date
-      const attendanceRecord = employee.attendance.find(day => day.date === request.date);
+    // Submit a leave request
+    submitLeaveRequest(employee) {
+      // Create the new leave request object
+      const newRequest = {
+        date: this.newRequestDate,
+        reason: this.newRequestReason,
+        status: "Pending",
+      };
 
-      // Update the attendance status if a record exists
+      // Add the request to the employee's leaveRequests array
+      employee.leaveRequests.push(newRequest);
+
+      // Reset form fields
+      this.newRequestDate = "";
+      this.newRequestReason = "";
+    },
+
+    // Approve a leave request
+    approveLeave(employee, request) {
+      const attendanceRecord = employee.attendance.find(
+        (day) => day.date === request.date
+      );
+
       if (attendanceRecord) {
         attendanceRecord.status = "On Leave";
       }
 
-      // Update the request status to approved
       request.status = "Approved";
     },
 
-    // Method to deny a leave request
+    // Deny a leave request
     denyLeave(employee, request) {
-      // Update the request status to denied
       request.status = "Denied";
     },
 
-    // Method to determine the CSS class for attendance status
+    // Get CSS class based on status
     getStatusClass(status) {
       switch (status) {
-        case 'Present':
-          return 'text-success';
-        case 'Absent':
-          return 'text-danger';
-        case 'On Leave':
-          return 'text-warning';
+        case "Present":
+          return "text-success";
+        case "Absent":
+          return "text-danger";
+        case "On Leave":
+          return "text-warning";
         default:
-          return '';
+          return "";
       }
     },
   },
@@ -234,71 +268,76 @@ export default {
 
 <style scoped>
 /* General styles */
-.time{
-    background-image: url('@/assets/Blue.png'); ;
-    background-size:cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 10x;
-  }
+.time {
+  background-image: url("@/assets/Blue.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 10px;
+}
+
 .leave-requests-list {
-  list-style-type: none; /* Remove list item points */
-  padding-left: 0; /* Remove the default left padding */
+  list-style-type: none;
+  padding-left: 0;
 }
 
 .text-success {
   color: green; /* Green for Present status */
 }
+
 .text-danger {
   color: red; /* Red for Absent status */
 }
+
 .text-warning {
   color: orange; /* Orange for On Leave status */
 }
+
 .employee-list {
   margin-top: 20px;
 }
+
 .employee {
-  margin-bottom: 30px; /* Spacing between employee sections */
-}
-button {
-  margin-left: 10px; /* Spacing between buttons */
-  padding: 5px 10px; /* Padding for buttons */
-  cursor: pointer; /* Pointer cursor for buttons */
+  margin-bottom: 30px;
 }
 
-/* Responsive styles for medium screens */
+button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
   .container {
-    padding: 10px; /* Reduce padding for smaller screens */
+    padding: 10px;
   }
   h1 {
-    font-size: 20px; /* Adjust font size for the header */
-    text-align: center; /* Center-align the header */
+    font-size: 20px;
+    text-align: center;
   }
   .employee {
-    margin-bottom: 20px; /* Adjust spacing */
-    border: 1px solid #000000; /* Add border around employee sections */
-    padding: 10px; /* Add padding */
-    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 20px;
+    border: 1px solid #000;
+    padding: 10px;
+    border-radius: 5px;
   }
   button {
-    font-size: 12px; /* Smaller font size for buttons */
-    padding: 5px; /* Adjust padding */
+    font-size: 12px;
+    padding: 5px;
   }
 }
 
-/* Responsive styles for small screens */
 @media (max-width: 480px) {
   h1 {
-    font-size: 18px; /* Further reduce header font size */
+    font-size: 18px;
   }
   .employee h2 {
-    font-size: 16px; /* Adjust font size for employee names */
+    font-size: 16px;
   }
   button {
-    font-size: 10px; /* Smaller font size for buttons */
-    padding: 3px; /* Adjust padding */
+    font-size: 10px;
+    padding: 3px;
   }
 }
 </style>

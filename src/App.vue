@@ -17,7 +17,7 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
               <router-link to="/login" class="nav-link" active-class="active">Log-Out</router-link>
@@ -57,27 +57,49 @@ export default {
 /* Custom CSS for blue navbar */
 .custom-blue-navbar {
   background-color: #4a90e2; /* Medium blue shade */
+  transition: background-color 0.3s ease-in-out; /* Smooth transition for background color */
 }
 
 .nav-link {
   color: white !important; /* Ensure links are visible */
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transition for hover effects */
+  margin-left: 15px; /* Add spacing between nav links */
 }
 
 .nav-link.active {
-  color: #ffdd57 !important; /* Highlight active link */
+  color: #57ff65 !important; /* Highlight active link */
 }
 
+/* Hover effect for nav links */
+.nav-link:hover {
+  color: #62ff57 !important; /* Change color on hover */
+  transform: scale(1.1); /* Slightly enlarge the text */
+}
+
+/* Navbar brand (logo + text) */
 .navbar-brand {
   color: white;
   font-weight: bold;
   display: flex;
   align-items: center; /* Align text and logo vertically */
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth hover transition */
 }
 
 .navbar-logo {
   height: 40px; /* Set the height of the logo */
   width: auto; /* Maintain aspect ratio */
   margin-right: 10px; /* Add spacing between the logo and text */
+  transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+/* Hover effect for navbar brand */
+.navbar-brand:hover {
+  color: #8bf11f; /* Change text color */
+  transform: scale(1.1); /* Slightly enlarge the brand on hover */
+}
+
+.navbar-logo:hover {
+  transform: rotate(360deg); /* Add a fun spinning effect to the logo */
 }
 
 /* Media Queries for responsiveness */

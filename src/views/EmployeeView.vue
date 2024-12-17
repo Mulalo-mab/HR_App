@@ -1,7 +1,8 @@
 <template>
+  <div class="cont">
   <div class="container">
     <!-- Title -->
-    <h1 class="text-center">Employee Data Management</h1>
+    <h1 class="text-center text-dark">Employee Data Management</h1>
 
     <!-- Search Bar -->
     <div class="mt-4">
@@ -124,6 +125,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -298,8 +300,21 @@ body {
   font-family: Arial, sans-serif;
 }
 
+.cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-image: url('@/assets/GR.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 10px;
+}
 .container {
   margin-top: 20px;
+  
 }
 
 .modal-content {

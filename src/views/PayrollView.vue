@@ -1,42 +1,44 @@
 <template>
   <div class="payrol">
     <section class="payroll-calculator container mt-5">
-      <h2 class="text-center text-light mb-4">Payroll Calculator</h2>
+      <h2 class="text-center text-dark mb-4">Payroll Calculator</h2>
 
-      <!-- Button to trigger modal -->
-      <button class="btn btn-primary" @click="showModal = true">Select Employee & Calculate Pay</button>
+      <!-- Employee Data Table -->
+      <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+          <tr >
+            <th>Employee ID</th>
+            <th>Hours Worked</th>
+            <th>Leave Deductions</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="employee in payrollData" :key="employee.employeeId">
+            <td>{{ employee.employeeId }}</td>
+            <td>{{ employee.hoursWorked }}</td>
+            <td>{{ employee.leaveDeductions }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm" @click="selectEmployee(employee)">
+                Calculate Payslip
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <!-- Modal Section -->
       <div v-if="showModal" class="modal-overlay">
         <div class="modal-content">
-          <h4 class="mb-3">Select Employee</h4>
-
-          <!-- Employee List -->
-          <ul class="list-group mb-3">
-            <li 
-              v-for="employee in payrollData" 
-              :key="employee.employeeId" 
-              class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Employee {{ employee.employeeId }} (Hours: {{ employee.hoursWorked }}, Leave: {{ employee.leaveDeductions }})</span>
-              <button class="btn btn-success btn-sm" @click="selectEmployee(employee)">Select</button>
-            </li>
-          </ul>
+          <h4 class="mb-3">Payslip Details</h4>
+          <p>Employee ID: {{ selectedEmployeeData?.employeeId }}</p>
+          <p>Hours Worked: {{ selectedEmployeeData?.hoursWorked }}</p>
+          <p>Leave Deductions: {{ selectedEmployeeData?.leaveDeductions }}</p>
+          <p class="font-weight-bold text-success">Final Salary: R{{ payResult }}</p>
 
           <!-- Close Modal Button -->
           <button class="btn btn-secondary" @click="closeModal">Close</button>
         </div>
-      </div>
-
-      <!-- Result Section -->
-      <div v-if="payResult !== null" class="result mt-4 p-3 border rounded shadow">
-        <h5 class="text-success">Calculated Pay:</h5>
-        <p>Employee ID: {{ selectedEmployeeData?.employeeId }}</p>
-        <p>Hours Worked: {{ selectedEmployeeData?.hoursWorked }}</p>
-        <p>Leave Deductions: {{ selectedEmployeeData?.leaveDeductions }}</p>
-        <p>Final Salary: R{{ payResult }}</p>
-
-        <!-- Close Result Button -->
-        <button class="btn btn-secondary" @click="closeResult">Close</button>
       </div>
     </section>
   </div>
@@ -47,67 +49,17 @@ export default {
   data() {
     return {
       // Sample employee payroll data
-      payrollData:  [
-      {
-          employeeId: 1,
-          hoursWorked: 160,
-          leaveDeductions: 8,
-          finalSalary: 69500,
-        },
-        {
-          employeeId: 2,
-          hoursWorked: 150,
-          leaveDeductions: 10,
-          finalSalary: 79000,
-        },
-        {
-          employeeId: 3,
-          hoursWorked: 170,
-          leaveDeductions: 4,
-          finalSalary: 54800,
-        },
-        {
-          employeeId: 4,
-          hoursWorked: 165,
-          leaveDeductions: 6,
-          finalSalary: 59700,
-        },
-        {
-          employeeId: 5,
-          hoursWorked: 158,
-          leaveDeductions: 5,
-          finalSalary: 57850,
-        },
-        {
-          employeeId: 6,
-          hoursWorked: 168,
-          leaveDeductions: 2,
-          finalSalary: 64800,
-        },
-        {
-          employeeId: 7,
-          hoursWorked: 175,
-          leaveDeductions: 3,
-          finalSalary: 71800,
-        },
-        {
-          employeeId: 8,
-          hoursWorked: 160,
-          leaveDeductions: 0,
-          finalSalary: 56000,
-        },
-        {
-          employeeId: 9,
-          hoursWorked: 155,
-          leaveDeductions: 5,
-          finalSalary: 61500,
-        },
-        {
-          employeeId: 10,
-          hoursWorked: 162,
-          leaveDeductions: 4,
-          finalSalary: 57750,
-        },
+      payrollData: [
+        { employeeId: 1, hoursWorked: 160, leaveDeductions: 8, finalSalary: 69500 },
+        { employeeId: 2, hoursWorked: 150, leaveDeductions: 10, finalSalary: 79000 },
+        { employeeId: 3, hoursWorked: 170, leaveDeductions: 4, finalSalary: 54800 },
+        { employeeId: 4, hoursWorked: 165, leaveDeductions: 6, finalSalary: 59700 },
+        { employeeId: 5, hoursWorked: 158, leaveDeductions: 5, finalSalary: 57850 },
+        { employeeId: 6, hoursWorked: 168, leaveDeductions: 2, finalSalary: 64800 },
+        { employeeId: 7, hoursWorked: 175, leaveDeductions: 3, finalSalary: 71800 },
+        { employeeId: 8, hoursWorked: 160, leaveDeductions: 0, finalSalary: 56000 },
+        { employeeId: 9, hoursWorked: 155, leaveDeductions: 5, finalSalary: 61500 },
+        { employeeId: 10, hoursWorked: 162, leaveDeductions: 4, finalSalary: 57750 },
       ],
       showModal: false, // Controls modal visibility
       selectedEmployeeData: null, // Stores selected employee data
@@ -119,16 +71,13 @@ export default {
     selectEmployee(employee) {
       this.selectedEmployeeData = employee;
       this.payResult = employee.finalSalary;
-      this.closeModal(); // Close modal after selection
+      this.showModal = true; // Open modal after calculation
     },
     // Close the modal
     closeModal() {
       this.showModal = false;
-    },
-    // Close the result section
-    closeResult() {
-      this.payResult = null;
       this.selectedEmployeeData = null;
+      this.payResult = null;
     },
   },
 };
@@ -146,23 +95,54 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 10px; 
+  padding: 10px;
 }
 
 /* Styling for the calculator section */
 .payroll-calculator {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  background: white;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #00ff6e;
+  color: rgb(59, 95, 223);
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  font-weight: bold;
+}
+
+td button {
+  margin: 0;
+  padding: 5px 10px;
 }
 
 /* Modal overlay styling */
 .modal-overlay {
   position: fixed;
-  top: 60px;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Slight transparency */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -177,26 +157,60 @@ export default {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   width: 90%;
   max-width: 500px;
-  margin-top: 20px;
 }
 
 /* Result section styling */
 .result {
   background-color: #f8f9fa;
   font-size: 1.2rem;
+  padding: 15px;
+  border-radius: 5px;
 }
 
-/* Media Queries for responsiveness */
-@media (max-width: 768px) {
-  .payrol {
-    padding: 5px;
-  }
+/* MEDIA QUERIES */
+
+/* Large screens (1200px and above) */
+@media (min-width: 1200px) {
   .payroll-calculator {
-    width: 100%;
-    margin: 0;
+    max-width: 1000px;
+    padding: 40px;
+  }
+  table {
+    font-size: 1rem;
+  }
+  .result {
+    font-size: 1.5rem;
+  }
+}
+
+/* Medium screens (768px - 1199px) */
+@media (max-width: 1199px) and (min-width: 768px) {
+  .payroll-calculator {
+    max-width: 800px;
+    padding: 30px;
+  }
+  table {
+    font-size: 0.9rem;
+  }
+  .result {
+    font-size: 1.2rem;
+  }
+}
+
+/* Small screens (480px - 767px) */
+@media (max-width: 767px) and (min-width: 480px) {
+  .payroll-calculator {
+    padding: 20px;
+  }
+  table {
+    font-size: 0.85rem;
+  }
+  th,
+  td {
+    padding: 8px;
   }
   .modal-content {
-    width: 90%;
+    width: 95%;
     padding: 15px;
   }
   .result {
@@ -204,36 +218,34 @@ export default {
   }
 }
 
-@media (max-width: 480px) {
+/* Extra-small screens (less than 480px) */
+@media (max-width: 479px) {
   .payrol {
     flex-direction: column;
-    align-items: stretch;
+    padding: 5px;
   }
-  .payroll-calculator h2 {
+  .payroll-calculator {
+    padding: 15px;
+  }
+  h2 {
     font-size: 1.5rem;
   }
-  .modal-content {
-    font-size: 0.9rem;
-    width: 95%;
-    padding: 10px;
-  }
-  .result {
-    font-size: 0.9rem;
-  }
-}
-
-/* Modal-specific responsiveness */
-@media (max-width: 360px) {
-  .modal-content {
+  table {
     font-size: 0.8rem;
-    width: 100%;
+  }
+  th,
+  td {
     padding: 5px;
+  }
+  .modal-content {
+    width: 100%;
+    padding: 10px;
   }
   .modal-content h4 {
     font-size: 1rem;
   }
-  .list-group-item {
-    font-size: 0.8rem;
+  .result {
+    font-size: 0.9rem;
   }
 }
 </style>
