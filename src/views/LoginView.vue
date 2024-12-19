@@ -91,20 +91,22 @@ export default {
       }
     },
     loginUser() {
+      // Mock validation
       if (this.username === "User1" && this.password === "12345678") {
         console.log("Login successful!");
-        this.$router.push("/"); // Replace with your home route
+        this.$router.push("/home"); // Navigate to the home route
       } else {
         alert("Invalid username or password. Please try again.");
       }
     },
     registerUser() {
+      // Mock registration validation
       if (!this.email || this.password !== this.confirmPassword) {
         alert("Passwords do not match or fields are empty.");
         return;
       }
       console.log("Registering with:", this.username, this.email, this.password);
-      this.$router.push("/");
+      this.$router.push("/home"); // Navigate to the home route after registration
     },
     toggleForm() {
       this.isLogin = !this.isLogin;
@@ -119,6 +121,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .log-in {

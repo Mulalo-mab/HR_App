@@ -20,10 +20,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <router-link to="/login" class="nav-link" active-class="active">Log-Out</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link to="/" class="nav-link" active-class="active">Home</router-link>
+              <router-link to="/home" class="nav-link" active-class="active">Home</router-link>
             </li>
             <li class="nav-item">
               <router-link to="/employee" class="nav-link" active-class="active">Employee</router-link>
@@ -33,6 +30,9 @@
             </li>
             <li class="nav-item">
               <router-link to="/timeoff" class="nav-link" active-class="active">Time-off</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/login" class="nav-link" active-class="active">Log-Out</router-link>
             </li>
           </ul>
         </div>

@@ -300,18 +300,7 @@ body {
   font-family: Arial, sans-serif;
 }
 
-.cont {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
-  background-image: url('@/assets/GR.png'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 10px;
-}
+
 .container {
   margin-top: 20px;
   
