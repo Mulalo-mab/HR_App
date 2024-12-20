@@ -15,5 +15,9 @@ npm run serve
 npm run build
 ```
 
+### Live Demo
+Explore the live application here:
+👉 [HR Application - Live App](https://hr-application-roan.vercel.app/employee)
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
